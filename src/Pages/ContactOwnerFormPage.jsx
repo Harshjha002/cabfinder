@@ -51,13 +51,13 @@ const ContactOwnerFormPage = () => {
                     {cab.available ? "Available" : "Not Available"}
                 </p>
 
-                {/* Buttons (Call & Copy Contact) */}
+
                 <div className="flex gap-4 mt-4">
                     <a
                         href={`tel:${owner.phone}`}
                         className={`w-1/2 py-2 rounded-lg text-center transition-all duration-200 ${theme === "dark"
-                                ? "bg-green-700 hover:bg-green-600 text-white"
-                                : "bg-green-600 hover:bg-green-700 text-white"
+                            ? "bg-green-700 hover:bg-green-600 text-white"
+                            : "bg-green-600 hover:bg-green-700 text-white"
                             }`}
                     >
                         📞 Call
@@ -65,8 +65,8 @@ const ContactOwnerFormPage = () => {
                     <button
                         onClick={handleCopy}
                         className={`w-1/2 py-2 rounded-lg flex items-center justify-center gap-2 transition-all duration-200 ${theme === "dark"
-                                ? "bg-[#535C91] hover:bg-[#9290C3] text-white"
-                                : "bg-blue-600 hover:bg-blue-700 text-white"
+                            ? "bg-[#535C91] hover:bg-[#9290C3] text-white"
+                            : "bg-blue-600 hover:bg-blue-700 text-white"
                             }`}
                     >
                         📋 {copied ? "Copied!" : `Copy ${owner.phone}`}

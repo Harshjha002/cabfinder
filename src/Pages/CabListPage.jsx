@@ -1,10 +1,10 @@
 import { useLocation } from "react-router-dom";
-import { useTheme } from "../Context/ThemeContext"; // Import ThemeContext
+import { useTheme } from "../Context/ThemeContext";
 import cabOwners from "../UTILS/data";
 import CabListPageCard from "../Components/CabListPage/CabListPageCard";
 
 const CabListPage = () => {
-    const { theme } = useTheme(); // Get theme from context
+    const { theme } = useTheme();
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
     const params = searchParams.get("filters");

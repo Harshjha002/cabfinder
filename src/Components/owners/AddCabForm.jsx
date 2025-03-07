@@ -1,22 +1,41 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTheme } from "../../Context/ThemeContext";
 
 // eslint-disable-next-line react/prop-types
 const AddCabForm = ({ onSubmit }) => {
-    const { register, handleSubmit, formState: { errors } } = useForm({
+    const { register, handleSubmit, formState: { errors }, setValue, watch } = useForm({
         defaultValues: {
             cabName: "",
             model: "",
             registrationNumber: "",
             seatingCapacity: "",
-            farePerKm: ""
+            farePerKm: "",
+            cabImage: null
         }
     });
 
     const { theme } = useTheme();
+    const [preview, setPreview] = useState(null);
+    const [imageName, setImageName] = useState("");
+
+    const cabImage = watch("cabImage");
+
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            if (!file.type.startsWith("image/")) {
+                alert("Please select a valid image file.");
+                return;
+            }
+            setPreview(URL.createObjectURL(file));
+            setImageName(file.name);
+            setValue("cabImage", file);
+        }
+    };
 
     return (
-        <form id="addCabForm" onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <form id="addCabForm" onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             {/* Cab Name */}
             <div>
                 <label className="block text-sm font-medium">Cab Name</label>
@@ -96,6 +115,35 @@ const AddCabForm = ({ onSubmit }) => {
                     <p className="text-red-500 text-xs">{errors.farePerKm.message}</p>
                 )}
             </div>
+
+            {/* Image Upload */}
+            <div>
+                <label className="block text-sm font-medium">Upload Cab Image</label>
+                <div className="relative w-full">
+                    <input
+                        type="file"
+                        accept="image/*"
+                        className="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
+                        onChange={handleImageChange}
+                    />
+                    <div className={`w-full p-3 text-center rounded-lg transition-all cursor-pointer
+                        ${theme === "dark"
+                            ? "bg-[#1B1A55] border-gray-600 text-white hover:bg-[#23235a]"
+                            : "bg-white border-gray-300 text-black hover:bg-gray-100"}`}>
+                        Choose Image
+                    </div>
+                </div>
+                {imageName && <p className="text-sm mt-2 text-gray-500">{imageName}</p>}
+            </div>
+
+            {/* Image Preview */}
+            {preview && (
+                <div className="mt-4 flex justify-center">
+                    <img src={preview} alt="Cab Preview"
+                        className="w-32 h-32 object-cover rounded-lg shadow-md border border-gray-300"
+                    />
+                </div>
+            )}
         </form>
     );
 };

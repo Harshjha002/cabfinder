@@ -15,6 +15,13 @@ const Modal = ({ btnName, title, content, btnText, onSubmit, btnClass }) => {
         closeModal();
     };
 
+    // Handle outside click to close modal
+    const handleOutsideClick = (e) => {
+        if (modalRef.current && e.target === modalRef.current) {
+            closeModal();
+        }
+    };
+
     return (
         <>
             {/* Trigger Button */}
@@ -25,6 +32,7 @@ const Modal = ({ btnName, title, content, btnText, onSubmit, btnClass }) => {
             {/* Modal Dialog with Blurred Background */}
             <dialog
                 ref={modalRef}
+                onClick={handleOutsideClick} // Detect click outside
                 className="modal fixed inset-0 flex items-center justify-center bg-black/30 backdrop-blur-md"
             >
                 {/* Solid Modal Box */}
@@ -33,6 +41,7 @@ const Modal = ({ btnName, title, content, btnText, onSubmit, btnClass }) => {
                     ${theme === "dark"
                             ? "bg-[#070F2B] text-[var(--dark-text)] border-[var(--dark-border)] shadow-lg"
                             : "bg-white text-[var(--light-text)] border-[var(--light-border)] shadow-lg"}`}
+                    onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the modal box
                 >
                     <h3 className="font-bold text-xl">{title}</h3>
 

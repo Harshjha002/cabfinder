@@ -23,6 +23,9 @@ const CabFinderForm = () => {
     const [tripType, setTripType] = useState("one-way");
     const [travelDate, setTravelDate] = useState("");
     const [returnDate, setReturnDate] = useState("");
+    const [carType, setCarType] = useState(CAR_TYPES[0]);
+    const [seater, setSeater] = useState(SEATER_OPTIONS[0]);
+
 
     const sourceRef = useRef(null);
     const destRef = useRef(null);
@@ -61,17 +64,52 @@ const CabFinderForm = () => {
         return () => document.removeEventListener("click", handleClickOutside);
     }, []);
 
-    const onSubmit = (data) => {
-        const { source, destination, carType, seater } = data;
+    // const onSubmit = (data) => {
+    //     const { source, destination, carType, seater } = data;
 
-        if (!source || !destination) {
-            alert("Please enter both source and destination.");
-            return;
-        }
+    //     if (!source || !destination) {
+    //         alert("Please enter both source and destination.");
+    //         return;
+    //     }
 
-        const searchParams = encodeURIComponent(JSON.stringify({ source, destination, carType, seater, travelDate, returnDate }));
-        navigate(`/cab-list/${searchParams}`);
+    //     const searchParams = encodeURIComponent(JSON.stringify({ source, destination, carType, seater, travelDate, returnDate }));
+    //     navigate(`/cab-list/${searchParams}`);
+    // };
+
+    const onSubmit = async (data) => {
+        const formData = new FormData();
+        formData.append("source", data.source);
+        formData.append("destination", data.destination);
+        formData.append("carType", carType);
+        formData.append("seater", seater);
+        formData.append("travelDate", travelDate || "N/A");
+        formData.append("returnDate", returnDate || "N/A");
+
+        try {
+            const response = await fetch("http://localhost:8000/submit.php", {
+                method: "POST",
+                body: formData,
+            });
+
+            const result = await response.json();
+            console.log("Server Response:", result);
+
+            const { source, destination, carType, seater } = data;
+
+            if (!source || !destination) {
+                alert("Please enter both source and destination.");
+                return;
+            }
+
+            const searchParams = encodeURIComponent(JSON.stringify({ source, destination, carType, seater, travelDate, returnDate }));
+            navigate(`/cab-list/${searchParams}`);
+        } catch (error) {
+            console.error("Error submitting form:", error);
+
+        };
     };
+
+
 
     return (
         <div className={`min-h-screen flex items-center justify-center px-4 transition-all
@@ -155,15 +193,26 @@ const CabFinderForm = () => {
                     )}
 
                     {/* Car Type & Seater */}
-                    <select className={`w-full px-4 py-2 border rounded-lg
-                                ${theme === "dark" ? "bg-gray-700 text-white border-gray-600" : "bg-gray-100 text-black border-gray-300"}`}>
-                        {CAR_TYPES.map(type => <option key={type}>{type}</option>)}
+                    {/* Car Type */}
+                    <select
+                        className={`w-full px-4 py-2 border rounded-lg
+                ${theme === "dark" ? "bg-gray-700 text-white border-gray-600" : "bg-gray-100 text-black border-gray-300"}`}
+                        value={carType}
+                        onChange={(e) => setCarType(e.target.value)}
+                    >
+                        {CAR_TYPES.map(type => <option key={type} value={type}>{type}</option>)}
                     </select>
 
-                    <select className={`w-full px-4 py-2 border rounded-lg
-                                ${theme === "dark" ? "bg-gray-700 text-white border-gray-600" : "bg-gray-100 text-black border-gray-300"}`}>
-                        {SEATER_OPTIONS.map(option => <option key={option}>{option}</option>)}
+                    {/* Seater */}
+                    <select
+                        className={`w-full px-4 py-2 border rounded-lg
+                ${theme === "dark" ? "bg-gray-700 text-white border-gray-600" : "bg-gray-100 text-black border-gray-300"}`}
+                        value={seater}
+                        onChange={(e) => setSeater(e.target.value)}
+                    >
+                        {SEATER_OPTIONS.map(option => <option key={option} value={option}>{option}</option>)}
                     </select>
+
 
                     <button type="submit" className="w-full bg-[#3674B5] text-white py-2 rounded-lg">Search</button>
                 </form>

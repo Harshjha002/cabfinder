@@ -4,11 +4,11 @@ import { useTheme } from "../Context/ThemeContext";
 import cabOwners from "../UTILS/data";
 import CabList from "../Components/owners/CabList";
 import OwnerInfoCard from "../Components/owners/OwnerInfoCard";
-import OwnerStats from "../Components/owners/OwnerStats";
+// import OwnerStats from "../Components/owners/OwnerStats";
 import EditProfileForm from "../Components/owners/EditProfileForm";
 
 const OwnerDashboardPage = () => {
-    const { id } = useParams(); // Get owner ID from URL
+    const { id } = useParams();
     const { theme } = useTheme();
     const [ownerData, setOwnerData] = useState(null);
 
@@ -27,7 +27,6 @@ const OwnerDashboardPage = () => {
         );
     }
 
-    // Check if essential owner details are missing
     const isProfileComplete = ownerData.name && ownerData.email && ownerData.phone && ownerData.location;
 
     return (
@@ -36,10 +35,8 @@ const OwnerDashboardPage = () => {
         >
             {isProfileComplete ? (
                 <>
-                    {/* Owner Info & Stats */}
                     <div className="grid gap-6">
                         <OwnerInfoCard owner={ownerData} />
-                        <OwnerStats cabs={ownerData.cabs} />
                     </div>
 
                     {/* Cab List */}

@@ -17,10 +17,9 @@ const Navbar = () => {
             {/* Logo */}
             <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigate("/")}>
                 <img src={logo} alt="Cab Finder Logo" className="w-10 h-10 rounded-full border border-[var(--primary)] shadow-md" />
-                <h3 className="text-lg font-bold tracking-wide">CAB FINDER</h3>
+                {/* <h3 className="text-lg font-bold tracking-wide">CAB FINDER</h3> */}
             </div>
 
-            {/* Desktop Navigation */}
             <div className="hidden md:flex items-center gap-6">
                 <ul className="flex gap-6 text-base font-medium">
                     <li>

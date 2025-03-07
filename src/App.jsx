@@ -12,6 +12,7 @@ import { ThemeProvider } from "./Context/ThemeContext";
 import { AuthProvider } from "./Context/AuthContext";
 import ProtectedRoute from "./Components/ProtectedRoute";
 
+
 function App() {
   return (
     <ThemeProvider>
@@ -19,6 +20,7 @@ function App() {
         <Router>
           <Navbar />
           <Routes>
+
             <Route path="/" element={<HomePage />} />
             <Route path="/sign-in" element={<SignInPage />} />
             <Route path="/sign-up" element={<SignupPage />} />

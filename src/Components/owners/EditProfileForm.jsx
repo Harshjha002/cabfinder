@@ -29,7 +29,9 @@ const EditProfileForm = ({ owner, onSubmit }) => {
     return (
         <form id="editProfileForm" onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div>
-                <label className="block text-sm font-medium text-gray-300">Name</label>
+                <label className={`block text-sm font-medium ${theme === "dark" ? "text-white" : "text-black"}`}>
+                    Name
+                </label>
                 <input
                     {...register("name", { required: "Name is required" })}
                     className={`w-full p-3 border rounded-lg outline-none transition-all 
@@ -41,7 +43,9 @@ const EditProfileForm = ({ owner, onSubmit }) => {
             </div>
 
             <div>
-                <label className="block text-sm font-medium text-gray-300">Email</label>
+                <label className={`block text-sm font-medium ${theme === "dark" ? "text-white" : "text-black"}`}>
+                    Email
+                </label>
                 <input
                     {...register("email", {
                         required: "Email is required",
@@ -56,7 +60,9 @@ const EditProfileForm = ({ owner, onSubmit }) => {
             </div>
 
             <div>
-                <label className="block text-sm font-medium text-gray-300">Phone</label>
+                <label className={`block text-sm font-medium ${theme === "dark" ? "text-white" : "text-black"}`}>
+                    Phone
+                </label>
                 <input
                     {...register("phone", {
                         required: "Phone is required",
@@ -71,7 +77,9 @@ const EditProfileForm = ({ owner, onSubmit }) => {
             </div>
 
             <div>
-                <label className="block text-sm font-medium text-gray-300">Location</label>
+                <label className={`block text-sm font-medium ${theme === "dark" ? "text-white" : "text-black"}`}>
+                    Location
+                </label>
                 <input
                     {...register("location", { required: "Location is required" })}
                     className={`w-full p-3 border rounded-lg outline-none transition-all 

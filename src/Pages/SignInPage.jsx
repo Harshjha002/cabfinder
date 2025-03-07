@@ -12,7 +12,6 @@ const SignInPage = () => {
 
     const onSubmit = async (data) => {
         console.log("Sign In Data:", data);
-        // Perform sign-in logic here
     };
 
     return (
