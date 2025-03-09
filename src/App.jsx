@@ -25,7 +25,10 @@ function App() {
             <Route path="/sign-in" element={<SignInPage />} />
             <Route path="/sign-up" element={<SignupPage />} />
             <Route path="/cab-finder" element={<CabFinderForm />} />
-            <Route path="/cab-list/:params" element={<CabListPage />} />
+            <Route path="/cab-list/:params" element={
+              <ProtectedRoute>
+                <CabListPage />
+              </ProtectedRoute>} />
             <Route path="/contact-owner/:id" element={<ContactOwnerFormPage />} />
             <Route path="/owner-dashboard" element={<OwnerDashboardPage />} />
 

@@ -1,9 +1,11 @@
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useTheme } from "../Context/ThemeContext";
+import axios from "axios";
 
 const SignupPage = () => {
     const { theme } = useTheme();
+    const navigate = useNavigate()
     const {
         register,
         handleSubmit,
@@ -11,6 +13,15 @@ const SignupPage = () => {
     } = useForm();
 
     const onSubmit = async (data) => {
+        try {
+            const response = await axios.post("http://localhost:8080/api/user/register", data)
+            console.log("User signed in succesfully : ", response)
+            navigate('/sign-in')
+        } catch (error) {
+            console.log(error)
+
+        }
+
         console.log("Sign Up Data:", data);
     };
 
@@ -36,7 +47,7 @@ const SignupPage = () => {
                         <label className="block font-medium mb-1">Full Name</label>
                         <input
                             type="text"
-                            {...register("fullName", { required: "Full Name is required" })}
+                            {...register("name", { required: "Full Name is required" })}
                             className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 transition-all 
                             ${theme === "dark"
                                     ? "bg-[var(--dark-bg)] border-[var(--dark-border)] text-white focus:ring-[var(--primary)]"
@@ -62,6 +73,21 @@ const SignupPage = () => {
                         />
                         {errors.email && (
                             <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
+                        )}
+                    </div>
+                    <div>
+                        <label className="block font-medium mb-1">Phone</label>
+                        <input
+                            type="tel"
+                            {...register("contactNo", { required: "Phone is required" })}
+                            className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 transition-all 
+                            ${theme === "dark"
+                                    ? "bg-[var(--dark-bg)] border-[var(--dark-border)] text-white focus:ring-[var(--primary)]"
+                                    : "bg-gray-100 border-gray-300 text-gray-900 focus:ring-blue-500"}`}
+                            placeholder="Enter your Phone"
+                        />
+                        {errors.email && (
+                            <p className="text-red-500 text-sm mt-1">{errors.contactNo.message}</p>
                         )}
                     </div>
 

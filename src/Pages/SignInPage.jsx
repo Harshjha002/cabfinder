@@ -1,9 +1,13 @@
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useTheme } from "../Context/ThemeContext";
+import axios from "axios";
+import { useAuth } from "../Context/AuthContext";
 
 const SignInPage = () => {
     const { theme } = useTheme();
+    const navigate = useNavigate();
+    const { login } = useAuth()
     const {
         register,
         handleSubmit,
@@ -11,8 +15,26 @@ const SignInPage = () => {
     } = useForm();
 
     const onSubmit = async (data) => {
-        console.log("Sign In Data:", data);
+        try {
+            const response = await axios.post("http://localhost:8080/api/user/signin", data);
+            console.log("User signed in successfully: ", response);
+
+            const user = response.data; // Extract the user data from response
+            console.log("user data:", user);
+
+            login(user); // Store the user data in the AuthContext
+
+            const username = user.username; // Assuming the username is part of the user data
+            console.log("username: ", username);
+
+            navigate('/'); // Redirect to the home page
+        } catch (error) {
+            console.log(error);
+        }
+
+        console.log("Sign Up Data:", data);
     };
+
 
     return (
         <div

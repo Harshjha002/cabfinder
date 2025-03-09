@@ -4,11 +4,13 @@ import logo from "../assets/logo.png";
 import { useTheme } from "../Context/ThemeContext";
 import { useState } from "react";
 import { X, Menu } from "lucide-react";
+import { useAuth } from "../Context/AuthContext";
 
 const Navbar = () => {
     const navigate = useNavigate();
     const { theme } = useTheme();
     const [menuOpen, setMenuOpen] = useState(false);
+    const { logout, user } = useAuth();
 
     return (
         <nav className={`py-4 px-6 flex justify-between items-center shadow-md transition-all
@@ -21,16 +23,46 @@ const Navbar = () => {
             </div>
 
             <div className="hidden md:flex items-center gap-6">
-                <ul className="flex gap-6 text-base font-medium">
-                    <li>
-                        <Link to="/sign-in" className="hover:text-[var(--primary)] transition">Log In</Link>
-                    </li>
-                    <li>
-                        <Link to="/sign-up" className="px-4 py-2 bg-[var(--primary)] hover:bg-opacity-90 text-white rounded-lg shadow-md transition">
-                            Sign Up
-                        </Link>
-                    </li>
-                </ul>
+                {
+                    user ? (
+                        <div className="flex gap-6 items-center">
+                            <p>
+                                <span className="text-[var(--primary)] font-semibold">
+                                    {user.name}
+                                </span>
+                            </p>
+
+                            <button
+                                onClick={() => {
+                                    logout();
+                                    navigate("/sign-in");
+                                }}
+                                className="text-base font-medium text-gray-700 hover:text-[var(--primary)] transition duration-200"
+                            >
+                                Logout
+                            </button>
+                        </div>
+                    ) : (
+                        <div className="flex gap-6 text-base font-medium">
+                            <div>
+                                <Link
+                                    to="/sign-in"
+                                    className="text-gray-700 hover:text-[var(--primary)] transition duration-200"
+                                >
+                                    Log In
+                                </Link>
+                            </div>
+                            <div>
+                                <Link
+                                    to="/sign-up"
+                                    className="px-4 py-2 bg-[var(--primary)] hover:bg-opacity-90 text-white rounded-lg shadow-md transition duration-200"
+                                >
+                                    Sign Up
+                                </Link>
+                            </div>
+                        </div>
+                    )
+                }
                 <ThemeController />
             </div>
 
@@ -64,21 +96,49 @@ const Navbar = () => {
                         </button>
 
                         {/* Menu Items */}
-                        <ul className="text-lg font-medium flex flex-col gap-3 mt-6">
-                            <li>
-                                <Link to="/sign-in" className="block hover:text-[var(--primary)] transition" onClick={() => setMenuOpen(false)}>
-                                    Log In
-                                </Link>
-                            </li>
-                            <li>
-                                <Link to="/sign-up" className="block hover:text-[var(--primary)] transition" onClick={() => setMenuOpen(false)}>
-                                    Sign Up
-                                </Link>
-                            </li>
-                            <li className="mt-3 flex justify-center">
-                                <ThemeController />
-                            </li>
-                        </ul>
+                        {
+                            user ? (
+                                <div className="flex gap-6 items-center">
+                                    <p>
+                                        <span className="text-[var(--primary)] font-semibold">
+                                            {user.name}
+                                        </span>
+                                    </p>
+
+                                    <button
+                                        onClick={() => {
+                                            logout();
+                                            navigate("/sign-in");
+                                        }}
+                                        className="text-base font-medium text-gray-700 hover:text-[var(--primary)] transition duration-200"
+                                    >
+                                        Logout
+                                    </button>
+                                </div>
+                            ) : (
+                                <div className="flex gap-6 text-base font-medium">
+                                    <div>
+                                        <Link
+                                            to="/sign-in"
+                                            className="text-gray-700 hover:text-[var(--primary)] transition duration-200"
+                                        >
+                                            Log In
+                                        </Link>
+                                    </div>
+                                    <div>
+                                        <Link
+                                            to="/sign-up"
+                                            className="px-4 py-2 bg-[var(--primary)] hover:bg-opacity-90 text-white rounded-lg shadow-md transition duration-200"
+                                        >
+                                            Sign Up
+                                        </Link>
+                                    </div>
+                                </div>
+                            )
+                        }
+                        <div className="mt-3 flex justify-center">
+                            <ThemeController />
+                        </div>
                     </div>
                 </>
             )}
