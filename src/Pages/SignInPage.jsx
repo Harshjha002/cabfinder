@@ -2,12 +2,12 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { useTheme } from "../Context/ThemeContext";
 import axios from "axios";
-import { useAuth } from "../Context/AuthContext";
+import { useUser } from "../Context/UserContext";
 
 const SignInPage = () => {
     const { theme } = useTheme();
     const navigate = useNavigate();
-    const { login } = useAuth()
+    const { login } = useUser()
     const {
         register,
         handleSubmit,
@@ -19,12 +19,12 @@ const SignInPage = () => {
             const response = await axios.post("http://localhost:8080/api/user/signin", data);
             console.log("User signed in successfully: ", response);
 
-            const user = response.data; // Extract the user data from response
+            const user = response.data;
             console.log("user data:", user);
 
-            login(user); // Store the user data in the AuthContext
+            login(user);
 
-            const username = user.username; // Assuming the username is part of the user data
+            const username = user.username;
             console.log("username: ", username);
 
             navigate('/'); // Redirect to the home page
