@@ -29,7 +29,7 @@ const HomePage = () => {
                     </Link>
 
                     <Link
-                        to="/owner-dashboard"
+                        to="/owner"
                         className="px-8 py-3 text-lg font-semibold rounded-lg shadow-md transition-all 
                         bg-[var(--secondary)] text-white hover:bg-opacity-90 transform hover:scale-105"
                     >
