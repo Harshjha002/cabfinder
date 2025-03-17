@@ -69,8 +69,43 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useTheme } from "../Context/ThemeContext";
 import OwnerInfoCard from "../Components/owners/OwnerInfoCard";
+import CabList from "../Components/owners/CabList";
 
 const OwnerDashboardPage = () => {
+
+    const cab = [{
+        id: "cab1",
+        model: "Toyota Innova",
+        type: "SUV",
+        seater: "6-Seater",
+        farePerKm: 15,
+        dailyFee: 1500,
+        rating: 4.8,
+        available: true,
+        image: "https://c4.wallpaperflare.com/wallpaper/628/480/45/bugatti-bugatti-divo-car-red-car-wallpaper-preview.jpg",
+    },
+    {
+        id: "cab2",
+        model: "Maruti Swift",
+        type: "Hatchback",
+        seater: "4-Seater",
+        farePerKm: 10,
+        dailyFee: 1000,
+        rating: 4.5,
+        available: true,
+        image: "https://c4.wallpaperflare.com/wallpaper/628/480/45/bugatti-bugatti-divo-car-red-car-wallpaper-preview.jpg",
+    },
+    {
+        id: "cab11",
+        model: "Hyundai Verna",
+        type: "Sedan",
+        seater: "4-Seater",
+        farePerKm: 12,
+        dailyFee: 1200,
+        rating: 4.6,
+        available: false,
+        image: "https://c4.wallpaperflare.com/wallpaper/628/480/45/bugatti-bugatti-divo-car-red-car-wallpaper-preview.jpg",
+    }]
 
     const { id } = useParams(); // Get user ID from URL params
     const { theme } = useTheme();
@@ -79,16 +114,21 @@ const OwnerDashboardPage = () => {
         name: "",
         email: "",
         owner: false,
-        cabs: []
+        contactNo: "",
+        imageURl: "",
+
     });
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
+
 
     useEffect(() => {
         const fetchOwnerData = async () => {
             try {
                 const response = await axios.get(`http://localhost:8080/api/user/${id}`);
                 setOwnerData(response.data);
+                console.log("ownerdetaile", response.data)
             } catch (err) {
                 console.error("Error fetching owner data:", err);
                 setError("Failed to load owner data.");
@@ -118,6 +158,9 @@ const OwnerDashboardPage = () => {
             ) : (
                 <p>No owner data available.</p>
             )}
+
+            <CabList cabs={cab} /> n
+
         </div>
     );
 }

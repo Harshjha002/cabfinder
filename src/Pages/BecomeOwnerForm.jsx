@@ -1,21 +1,42 @@
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 import { useTheme } from "../Context/ThemeContext";
 import axios from "axios";
 import { useNavigate } from "react-router";
 
 const BecomeOwnerForm = () => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const { theme } = useTheme();
+    const [imagePreview, setImagePreview] = useState(null);
+    const [imageData, setImageData] = useState("");
+
     const {
         register,
         handleSubmit,
         formState: { errors, isSubmitting },
+        setValue
     } = useForm();
 
+    // Handle image selection
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setImagePreview(reader.result);
+                setImageData(reader.result); // Base64 string
+                setValue("image", reader.result); // Set value for form submission
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
     const onSubmit = async (data) => {
-        console.log("Become Owner Form Data:", data);
+        const formData = { ...data, image: imageData };
+
+        console.log("Become Owner Form Data:", formData);
         try {
-            const response = await axios.patch("http://localhost:8080/api/user/owner", data);
+            const response = await axios.patch("http://localhost:8080/api/user/owner", formData);
             console.log("Application submitted:", response.data);
 
             if (response.data.userId) {
@@ -27,8 +48,6 @@ const BecomeOwnerForm = () => {
             console.error("Error submitting application:", error);
         }
     };
-
-
 
     return (
         <div
@@ -112,6 +131,26 @@ const BecomeOwnerForm = () => {
                         />
                         {errors.location && (
                             <p className="text-red-500 text-sm mt-1">{errors.location.message}</p>
+                        )}
+                    </div>
+
+                    {/* Image Upload */}
+                    <div>
+                        <label className="block font-medium mb-1">Profile Picture</label>
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={handleImageChange}
+                            className="w-full px-4 py-2 border rounded-lg bg-gray-100 border-gray-300 text-gray-900"
+                        />
+                        {imagePreview && (
+                            <div className="mt-3 flex justify-center">
+                                <img
+                                    src={imagePreview}
+                                    alt="Profile Preview"
+                                    className="w-24 h-24 object-cover rounded-full border-2 border-[var(--primary)] shadow-md"
+                                />
+                            </div>
                         )}
                     </div>
 

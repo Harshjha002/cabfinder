@@ -17,7 +17,7 @@ const OwnerInfoCard = ({ owner }) => {
             <div className="flex flex-col sm:flex-row sm:items-center gap-5">
                 {/* Profile Image */}
                 <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden border-2 border-[var(--primary)] shadow-md">
-                    <img src={owner.image} alt={owner.name} className="w-full h-full object-cover" />
+                    <img src={owner.imageURL === null ? "https://media.istockphoto.com/id/1396606504/photo/happy-truck-driver-with-crossed-arms-looking-at-camera.jpg?s=2048x2048&w=is&k=20&c=iYrKFWQfe9oXeL8GqmjnI5YzrwawPLsXYnY0fUg5C0k=" : owner.imageURL} alt={owner.name} className="w-full h-full object-cover" />
                 </div>
 
                 {/* Owner Details */}
@@ -29,7 +29,7 @@ const OwnerInfoCard = ({ owner }) => {
                         📍 {owner.location}
                     </p>
                     <p className="text-sm font-medium flex items-center gap-2">
-                        📞 {owner.phone}
+                        📞 {owner.contactNo}
                     </p>
                     <p className="text-sm font-medium flex items-center gap-2">
                         📧 {owner.email}
