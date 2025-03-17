@@ -5,7 +5,6 @@ import { useTheme } from "../../Context/ThemeContext";
 
 const EditProfileForm = ({ owner, onSubmit }) => {
     const { theme } = useTheme();
-
     const { register, handleSubmit, formState: { errors }, reset } = useForm({
         defaultValues: {
             name: "",

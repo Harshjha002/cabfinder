@@ -1,53 +1,43 @@
+/* eslint-disable react/prop-types */
 import Modal from "../Model";
-import EditCabDetailsForm from "./EditCabDetailsForm";
+import AddCabForm from "./AddCabForm";
+import CabListCard from "./CabListCard";
 import { useTheme } from "../../Context/ThemeContext";
 
-/* eslint-disable react/prop-types */
-const CabListCard = ({ cab }) => {
+const CabList = ({ cabs }) => {
     const { theme } = useTheme();
 
     return (
-        <div
-            className={`p-4 rounded-lg shadow-md border transition-all
-            ${theme === "dark"
-                    ? "bg-[var(--dark-bg)] text-[var(--dark-text)] border-[var(--dark-border)]"
-                    : "bg-[var(--light-bg)] text-[var(--light-text)] border-[var(--light-border)]"}`}
+        <section
+            className={`p-6 rounded-xl shadow-md border transition-all mt-6 
+                ${theme === "dark"
+                    ? "bg-[#070F2B] text-[#E0E0E0] border-[#535C91]"
+                    : "bg-white text-gray-900 border-gray-300"}`}
         >
-            {/* Cab Image */}
-            <div className="relative w-full h-40 rounded-md overflow-hidden">
-                <img
-                    src={cab.image}
-                    alt={cab.model}
-                    className="w-full h-full object-cover"
-                />
-            </div>
+            <div className="flex items-center justify-between mb-4">
+                <h2 className="text-xl font-bold">🚖 Your Cabs</h2>
 
-            {/* Cab Details */}
-            <div className="mt-4 space-y-1">
-                <h3 className="text-lg font-semibold">{cab.model}</h3>
-                <p className="text-sm">🚗 Type: {cab.type}</p>
-                <p className="text-sm">🛋️ Seats: {cab.seater}</p>
-                <p className="text-sm">💰 Fare: ₹{cab.farePerKm} / km</p>
-                <p className="text-sm">📆 Daily Fee: ₹{cab.dailyFee}</p>
-                <p className="text-sm">⭐ Rating: {cab.rating}</p>
-                <p className={`text-sm font-medium ${cab.available ? "text-green-500" : "text-red-500"}`}>
-                    {cab.available ? "🟢 Available" : "🔴 Occupied"}
-                </p>
-            </div>
-
-            {/* Edit Cab Button */}
-            <div className="mt-4">
                 <Modal
-                    btnName="✏️ Edit Cab"
-                    title="Edit Cab Details"
-                    content={<EditCabDetailsForm />}
-                    onSubmit={() => console.log("Cab Edited")}
-                    btnText="Save Changes"
-                    btnClass="px-4 py-2 text-sm font-medium rounded-lg shadow-md bg-[var(--secondary)] text-white hover:bg-opacity-90 transition-all"
+                    btnName="+ Add Cab"
+                    title="Add New Cab"
+                    content={<AddCabForm />}
+                    onSubmit={() => console.log("Cab Added!")}
+                    btnText="Add"
+                    btnClass="px-4 py-2 text-sm font-medium rounded-lg shadow-md bg-blue-600 text-white hover:bg-blue-700 transition-all"
                 />
             </div>
-        </div>
+
+            {cabs.length > 0 ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                    {cabs.map((cab) => (
+                        <CabListCard key={cab.id} cab={cab} />
+                    ))}
+                </div>
+            ) : (
+                <p className="text-center text-lg text-gray-500 dark:text-gray-400">No cabs available. Add a new cab to get started!</p>
+            )}
+        </section>
     );
 };
 
-export default CabListCard;
+export default CabList;

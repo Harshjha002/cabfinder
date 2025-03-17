@@ -9,10 +9,15 @@ const Modal = ({ btnName, title, content, btnText, onSubmit, btnClass }) => {
     const openModal = () => modalRef.current?.showModal();
     const closeModal = () => modalRef.current?.close();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        onSubmit();
-        closeModal();
+
+        try {
+            await onSubmit(); // Ensure onSubmit is async to wait for completion
+            closeModal();
+        } catch (error) {
+            console.error("Form submission error:", error);
+        }
     };
 
     // Handle outside click to close modal
@@ -29,13 +34,13 @@ const Modal = ({ btnName, title, content, btnText, onSubmit, btnClass }) => {
                 {btnName}
             </button>
 
-            {/* Modal Dialog with Blurred Background */}
+            {/* Modal Dialog */}
             <dialog
                 ref={modalRef}
                 onClick={handleOutsideClick} // Detect click outside
                 className="modal fixed inset-0 flex items-center justify-center bg-black/30 backdrop-blur-md"
             >
-                {/* Solid Modal Box */}
+                {/* Modal Box */}
                 <div
                     className={`modal-box p-6 rounded-lg shadow-xl transition-all max-w-md w-full border 
                     ${theme === "dark"
@@ -45,7 +50,8 @@ const Modal = ({ btnName, title, content, btnText, onSubmit, btnClass }) => {
                 >
                     <h3 className="font-bold text-xl">{title}</h3>
 
-                    <form method="dialog" onSubmit={handleSubmit} className="space-y-4">
+                    {/* Form Content */}
+                    <form id="modalForm" onSubmit={handleSubmit} className="space-y-4">
                         <div>{content}</div>
                         <div className="modal-action flex justify-end gap-4">
                             {/* Close Button */}

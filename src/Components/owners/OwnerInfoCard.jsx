@@ -41,11 +41,12 @@ const OwnerInfoCard = ({ owner }) => {
                     <Modal
                         btnName="Edit Profile"
                         title="Edit Profile"
-                        content={<EditProfileForm />}
+                        content={<EditProfileForm onSubmit={() => console.log("Updated")} />}
                         onSubmit={() => console.log("Updated")}
-                        btnText="Add"
+                        btnText="Save"
                         btnClass="px-4 py-2 text-sm font-medium rounded-lg shadow-md bg-[var(--primary)] text-white hover:bg-opacity-90 transition-all"
                     />
+
                 </div>
             </div>
         </section>
