@@ -17,7 +17,7 @@ export const UserProvider = ({ children }) => {
             email: userData.email,
             contactNo: userData.contactNo,
             token: userData.token,
-            isOwner: userData.isOwner, // Ensure backend sends this
+            isOwner: userData.isOwner,
         };
         setUser(userDetails);
         localStorage.setItem("user", JSON.stringify(userDetails));

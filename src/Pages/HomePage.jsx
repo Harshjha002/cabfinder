@@ -34,7 +34,7 @@ const HomePage = () => {
                     </Link>
 
                     <Link
-                        to={user ? `/owner-dashboard/${user.id}` : "/owner"}
+                        to={user.isOwner ? `/owner-dashboard/${user.id}` : "/owner"}
                         className={`${buttonClasses} bg-[var(--secondary)] text-white hover:bg-opacity-90`}
                     >
                         Become an Owner 🚗
