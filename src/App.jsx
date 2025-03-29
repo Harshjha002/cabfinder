@@ -37,19 +37,17 @@ function AppRoutes() {
       <Route
         path="/cab-list/:params"
         element={
-          <ProtectedRoute>
-            <CabListPage />
-          </ProtectedRoute>
+          <CabListPage />
         }
       />
-      <Route path="/contact-owner/:id" element={<ContactOwnerFormPage />} />
+      <Route path="/contact-owner/:id" element={<ProtectedRoute><ContactOwnerFormPage /></ProtectedRoute>} />
 
       {/* ✅ Protected owner dashboard */}
       <Route
         path="/owner"
         element={
           <ProtectedRoute>
-            {user?.isOwner ? <OwnerDashboardPage /> : <BecomeOwnerForm />}
+            {user ? <OwnerDashboardPage /> : <BecomeOwnerForm />}
           </ProtectedRoute>
         }
       />

@@ -19,17 +19,27 @@ const SignInPage = () => {
     const onSubmit = async (data) => {
         try {
             const response = await axios.post("http://localhost:8080/api/user/signin", data);
+
+            // Store session token (if backend provides one)
+            if (response.data.token) {
+                localStorage.setItem("sessionToken", response.data.token);
+            }
+
+            // Store user data in context
             login(response.data);
-            navigate("/");
+
+            // Navigate back to the previous page
+            navigate(-1);
         } catch (error) {
-            setErrorMessage(error.response?.data?.message || "Sign-in failed. Try again.");
+            setErrorMessage(error.response?.data?.error || "Sign-in failed. Try again.");
         }
     };
 
+
     const isDark = theme === "dark";
     const inputClasses = `w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 transition-all ${isDark
-            ? "bg-[var(--dark-bg)] border-[var(--dark-border)] text-white focus:ring-[var(--primary)]"
-            : "bg-gray-100 border-gray-300 text-gray-900 focus:ring-blue-500"
+        ? "bg-[var(--dark-bg)] border-[var(--dark-border)] text-white focus:ring-[var(--primary)]"
+        : "bg-gray-100 border-gray-300 text-gray-900 focus:ring-blue-500"
         }`;
 
     return (

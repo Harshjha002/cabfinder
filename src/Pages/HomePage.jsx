@@ -7,11 +7,12 @@ const HomePage = () => {
     const { user } = useUser();
 
     const containerClasses = `min-h-screen flex items-center justify-center px-4 transition-all ${theme === "dark"
-        ? "bg-[var(--dark-bg)] text-[var(--dark-text)]"
-        : "bg-[var(--light-bg)] text-[var(--light-text)]"
+            ? "bg-[var(--dark-bg)] text-[var(--dark-text)]"
+            : "bg-[var(--light-bg)] text-[var(--light-text)]"
         }`;
 
-    const buttonClasses = "px-8 py-3 text-lg font-semibold rounded-lg shadow-md transition-all transform hover:scale-105";
+    const buttonClasses =
+        "px-8 py-3 text-lg font-semibold rounded-lg shadow-md transition-all transform hover:scale-105";
 
     return (
         <div className={containerClasses}>
@@ -34,7 +35,7 @@ const HomePage = () => {
                     </Link>
 
                     <Link
-                        to={user.isOwner ? `/owner-dashboard/${user.id}` : "/owner"}
+                        to={user?.isOwner ? `/owner-dashboard/${user.id}` : "/owner"}
                         className={`${buttonClasses} bg-[var(--secondary)] text-white hover:bg-opacity-90`}
                     >
                         Become an Owner 🚗
