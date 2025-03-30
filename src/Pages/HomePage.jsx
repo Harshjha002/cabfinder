@@ -36,12 +36,8 @@ const HomePage = () => {
                         Find a Cab 🚖
                     </Link>
 
-                    <Link
-                        to={user.isOwner ? `/owner-dashboard/${user.id}` : "/owner"}
-                        className={secondaryButton}
-                    >
-                        Become an Owner 🚗
-                    </Link>
+                    {user && user?.isOwner ? <Link to={`/owner-dashboard/${user.id}`} className={primaryButton}>Become a Owner</Link> : <Link to={'/owner'} className={secondaryButton}>Become a Owner</Link>}
+
 
 
 
