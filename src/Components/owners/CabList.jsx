@@ -3,9 +3,14 @@ import Modal from "../Model";
 import AddCabForm from "./AddCabForm";
 import CabListCard from "./CabListCard";
 import { useTheme } from "../../Context/ThemeContext";
+import { useState } from "react";
+import axios from "axios";
+import { useUser } from "../../Context/UserContext";
 
 const CabList = ({ cabs }) => {
-    const { theme } = useTheme(); // Get theme from context
+    const [isOpen, setIsOpen] = useState(false)
+    const { theme } = useTheme();
+    const { user } = useUser()
 
     return (
         <section
@@ -18,14 +23,22 @@ const CabList = ({ cabs }) => {
                 <h2 className="text-xl font-bold">🚖 Your Cabs</h2>
 
                 {/* Add Cab Button */}
-                <Modal
-                    btnName="+ Add Cab"
-                    title="Add New Cab"
-                    content={<AddCabForm />}
-                    onSubmit={() => console.log("Cab Added!")}
-                    btnText="Add"
-                    btnClass="px-4 py-2 text-sm font-medium rounded-lg shadow-md bg-[var(--primary)] text-white hover:bg-opacity-90 transition-all"
-                />
+                <button onClick={() => setIsOpen(true)}>+ Add Cab</button>
+                {isOpen &&
+                    <Modal
+                        ModalHeading="Add new Cab"
+                        onClose={() => setIsOpen(false)}
+                        onConfirm={(data) => {
+                            axios.post(`http://localhost:8080/api/cabs/${user.id}`, data)
+                                .then(() => setIsOpen(false))
+                                .catch(err => console.error("Failed to add cab:", err));
+                        }}
+                        confirmText="Add"
+                        isOpen={isOpen}
+                    >
+                        <AddCabForm />
+                    </Modal>
+                }
             </div>
 
             {/* Grid Layout for Cab Cards */}

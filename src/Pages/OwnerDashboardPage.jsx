@@ -21,8 +21,8 @@ const OwnerDashboardPage = () => {
                 setOwnerData(response.data);
 
                 // Fetch cabs associated with the owner (assuming an API endpoint)
-                const cabResponse = await axios.get(`http://localhost:8080/api/cabs?ownerId=${id}`);
-                setCabs(cabResponse.data);
+                // const cabResponse = await axios.get(`http://localhost:8080/api/cabs?ownerId=${id}`);
+                // setCabs(cabResponse.data);
             } catch (err) {
                 console.error("Error fetching owner data:", err);
                 setError("Failed to load owner data.");

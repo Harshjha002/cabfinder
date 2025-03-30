@@ -5,14 +5,19 @@ import { useUser } from "../Context/UserContext";
 const HomePage = () => {
     const { theme } = useTheme();
     const { user } = useUser();
+    const isDark = theme === "dark";
 
-    const containerClasses = `min-h-screen flex items-center justify-center px-4 transition-all ${theme === "dark"
-            ? "bg-[var(--dark-bg)] text-[var(--dark-text)]"
-            : "bg-[var(--light-bg)] text-[var(--light-text)]"
-        }`;
+    console.log(user)
 
-    const buttonClasses =
-        "px-8 py-3 text-lg font-semibold rounded-lg shadow-md transition-all transform hover:scale-105";
+    // Styles
+    const containerClasses = `
+        min-h-screen flex items-center justify-center px-4 transition-all
+        ${isDark ? "bg-[var(--dark-bg)] text-[var(--dark-text)]" : "bg-[var(--light-bg)] text-[var(--light-text)]"}
+    `;
+
+    const baseButton = "px-8 py-3 text-lg font-semibold rounded-lg shadow-md transition-all transform hover:scale-105";
+    const primaryButton = `${baseButton} bg-[var(--primary)] text-white hover:bg-opacity-90`;
+    const secondaryButton = `${baseButton} bg-[var(--secondary)] text-white hover:bg-opacity-90`;
 
     return (
         <div className={containerClasses}>
@@ -27,19 +32,19 @@ const HomePage = () => {
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-6 justify-center">
-                    <Link
-                        to="/cab-finder"
-                        className={`${buttonClasses} bg-[var(--primary)] text-white hover:bg-opacity-90`}
-                    >
+                    <Link to="/cab-finder" className={primaryButton}>
                         Find a Cab 🚖
                     </Link>
 
                     <Link
-                        to={user?.isOwner ? `/owner-dashboard/${user.id}` : "/owner"}
-                        className={`${buttonClasses} bg-[var(--secondary)] text-white hover:bg-opacity-90`}
+                        to={user.isOwner ? `/owner-dashboard/${user.id}` : "/owner"}
+                        className={secondaryButton}
                     >
                         Become an Owner 🚗
                     </Link>
+
+
+
                 </div>
             </div>
         </div>

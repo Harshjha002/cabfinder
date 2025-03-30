@@ -3,30 +3,21 @@
   themes: light --default, dark --prefersdark, cupcake;
 }
 
-@theme {
-  --primary: #2563EB;
-  --secondary: #3B82F6;
-  --accent: #A5F3FC;
-  --background: #F0F9FF;
-  --text-color: #111827;
-}
-
 @layer base {
   :root {
-    --primary: #2563EB;
-    --secondary: #3B82F6;
-    --accent: #A5F3FC;
-    --background: #F0F9FF;
-    --text-color: #111827;
+    --primary: #1D4E89;
+    --secondary: #4682B4;
+    --accent: #A7D4EC;
+    --background: #F8FAFC;
+    --text-color: #1E293B;
   }
 
-  /* Dark mode */
   .dark {
-    --primary: #1E40AF;
-    --secondary: #1E3A8A;
-    --accent: #818CF8;
+    --primary: #103E6E;
+    --secondary: #1D6FA3;
+    --accent: #3A91C9;
     --background: #0F172A;
-    --text-color: #E0F2FE;
+    --text-color: #E2E8F0;
   }
 
   body {
@@ -44,11 +35,11 @@
   }
 
   .btn-primary:hover {
-    background-color: rgba(37, 99, 235, 0.8); /* Lighter blue */
+    background-color: rgba(29, 78, 137, 0.85);
   }
 
   .dark .btn-primary:hover {
-    background-color: rgba(30, 64, 175, 0.8); /* Lighter dark mode blue */
+    background-color: rgba(16, 62, 110, 0.85);
   }
 
   .btn-secondary {
@@ -58,11 +49,10 @@
   }
 
   .btn-secondary:hover {
-    background-color: rgba(59, 130, 246, 0.8);
+    background-color: rgba(70, 130, 180, 0.85);
   }
 
   .dark .btn-secondary:hover {
-    background-color: rgba(30, 58, 138, 0.8);
+    background-color: rgba(29, 111, 163, 0.85);
   }
 }
-
